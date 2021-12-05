@@ -6,10 +6,25 @@
         xmlns:local="clr-namespace:TestAutoAktualizacji"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <StackPanel>
-        <Label x:Name="label" FontSize="20"/>
-        <Label x:Name="label2" FontSize="20"/>
-        <Label x:Name="label3" FontSize="20"/>
-        <Label Content="dziala" FontSize="20"/>
-    </StackPanel>
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label>
+                Current version
+            </Label>
+
+            <TextBox x:Name="CurrentVersionTextBox"
+                IsReadOnly="True">
+
+            </TextBox>
+
+            <Button x:Name="UpdateButton" Click="UpdateButton_Click"
+                Margin="0,15,0,0" IsEnabled="False">
+                Update
+            </Button>
+
+            <Button Click="CheckForUpdatesButton_Click">
+                Check
+            </Button>
+        </StackPanel>
+    </Grid>
 </Window>

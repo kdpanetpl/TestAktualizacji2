@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Squirrel;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -22,17 +23,42 @@ namespace TestAutoAktualizacji
     /// </summary>
     public partial class MainWindow : Window
     {
-        string version;
+        UpdateManager manager;
+
         public MainWindow()
         {
-            version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             InitializeComponent();
-            System.Reflection.Assembly executingAssembly = System.Reflection.Assembly.GetExecutingAssembly();
-            var fieVersionInfo = FileVersionInfo.GetVersionInfo(executingAssembly.Location);
-            var version2 = fieVersionInfo.FileVersion;
-            label.Content = "0.2.1.13";
-            label2.Content = version;
-            label3.Content = version2;
+            Loaded += MainWindow_Loaded;
         }
+
+        private async void CheckForUpdatesButton_Click(object sender, RoutedEventArgs e)
+        {
+            var updateInfo = await manager.CheckForUpdate();
+
+            if (updateInfo.ReleasesToApply.Count > 0)
+            {
+                UpdateButton.IsEnabled = true;
+            }
+            else
+            {
+                UpdateButton.IsEnabled = false;
+            }
+        }
+
+        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            manager = await UpdateManager
+                .GitHubUpdateManager(@"https://github.com/kdpanetpl/TestAktualizacji2");
+
+            CurrentVersionTextBox.Text = manager.CurrentlyInstalledVersion().ToString();
+        }
+
+        private async void UpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            await manager.UpdateApp();
+
+            MessageBox.Show("Updated succesfuly!");
+        }
+
     }
 }
