@@ -18,7 +18,7 @@
 		<NugetTools>$(PkgNuGet_CommandLine)\tools</NugetTools>
 		<SquirrelTools>$(Pkgsquirrel_windows)\tools</SquirrelTools>
 
-		<Version>2.0.5</Version>
+		<Version>2.0.6</Version>
 
 		<NuspecFile>$(SolutionDir)TestAutoAktualizacji\ReleaseSpec.nuspec</NuspecFile>
 	</PropertyGroup>
